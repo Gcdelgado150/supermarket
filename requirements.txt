@@ -7,6 +7,7 @@ certifi==2024.7.4
 charset-normalizer==3.3.2
 click==8.1.7
 Django==5.1
+django-rql==4.4.1
 djangorestframework==3.15.2
 gitdb==4.0.11
 GitPython==3.1.43
@@ -14,6 +15,8 @@ idna==3.7
 Jinja2==3.1.4
 jsonschema==4.23.0
 jsonschema-specifications==2023.12.1
+lark-parser==0.11.0
+lib-rql==2.0.2
 markdown-it-py==3.0.0
 MarkupSafe==2.1.5
 mdurl==0.1.2

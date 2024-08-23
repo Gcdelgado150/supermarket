@@ -24,4 +24,6 @@ Project for a supermarket using Django and Streamlit
 
 7. Migrate models
 
-# 
+8. Create URLs - Views - Serializerss
+
+8. Paginação

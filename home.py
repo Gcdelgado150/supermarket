@@ -3,18 +3,9 @@ import requests
 import json
 import pandas as pd
 import plotly.express as px
+from helpers import create_sidebar
+from helpers.global_variables import BASE_URL, PRODUCTS_URL, CATEGORIES_URL, MARKET_URL, STOCK_URL
 
-st.write("Hello")
+create_sidebar()
 
-response = requests.get("http://127.0.0.1:8000/market/supermarketController/")
-response_dict = json.loads(response.text)
-
-df = pd.DataFrame(response_dict["results"])[["name", "city"]]
-p = df.value_counts("city").reset_index()
-p
-
-fig = px.pie(df.value_counts("city").reset_index(), values='count', names='city', title='Distribuition of supermarkets registered in the system')
-st.plotly_chart(fig, use_container_width=True)
-
-# for k, v in .items():
-#     st.write(k, v)
+st.write("This is the home page.")

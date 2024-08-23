@@ -3,6 +3,13 @@ from helpers.global_variables import BASE_URL, PRODUCTS_URL, CATEGORIES_URL
 import requests
 import json
 import pandas as pd
+from helpers import create_sidebar
+
+st.set_page_config(
+        page_title="Products",
+)
+
+create_sidebar()
 
 def verify_conditions():
     return False

@@ -101,7 +101,7 @@ class Stocking(models.Model):
         verbose_name_plural = "Estoques"
 
     def __str__(self) -> str:
-        return f"stock {self.name}"
+        return f"{self.supermarket} {self.product} - {self.amount}"
 
 class Purchase(models.Model):
     """

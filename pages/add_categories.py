@@ -3,6 +3,13 @@ import requests
 from helpers import BASE_URL, CATEGORIES_URL
 import pandas as pd
 import json
+from helpers import create_sidebar
+
+st.set_page_config(
+        page_title="Categories",
+)
+
+create_sidebar()
 
 name = st.text_input(label="Name of the category: ")
 description = st.text_area(

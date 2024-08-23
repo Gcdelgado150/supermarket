@@ -18,7 +18,7 @@ response_supermarket = json.loads(response_supermarket.text)
 response_products = json.loads(response_products.text)
 
 df_markets = pd.DataFrame(response_supermarket["results"])
-df_products = pd.DataFrame(response_products["results"])
+df_products = pd.DataFrame(response_products["results"])    
 
 supermarket = st.selectbox(label="Name:", 
                            options=df_markets.name.unique(), 

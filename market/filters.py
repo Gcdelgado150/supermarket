@@ -1,6 +1,24 @@
 from dj_rql.filter_cls import AutoRQLFilterClass, FilterLookups
 from market.models import *
 
+class SupermarketFilterClass(AutoRQLFilterClass):
+    MODEL = Supermarket
+    
+class CustomerFilterClass(AutoRQLFilterClass):
+    MODEL = Customer
+
+class CategoryFilterClass(AutoRQLFilterClass):
+    MODEL = Category
+
+class ProductFilterClass(AutoRQLFilterClass):
+    MODEL = Product
+    FILTERS = [
+        {
+            'filter': 'category',
+            'source': 'category__name'
+        },
+    ]
+
 class StockFilterClass(AutoRQLFilterClass):
     MODEL = Stocking
     FILTERS = [
@@ -14,11 +32,6 @@ class StockFilterClass(AutoRQLFilterClass):
         },
     ]
     
-class SupermarketFilterClass(AutoRQLFilterClass):
-    MODEL = Supermarket
-    
-class CustomerFilterClass(AutoRQLFilterClass):
-    MODEL = Customer
 
 class PurchaseFilterClass(AutoRQLFilterClass):
     MODEL = Purchase
@@ -36,15 +49,3 @@ class PurchaseFilterClass(AutoRQLFilterClass):
             'source': 'product__name'
         },
     ]
-
-class ProductFilterClass(AutoRQLFilterClass):
-    MODEL = Product
-    FILTERS = [
-        {
-            'filter': 'category',
-            'source': 'category__name'
-        },
-    ]
-
-class CategoryFilterClass(AutoRQLFilterClass):
-    MODEL = Category

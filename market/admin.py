@@ -22,19 +22,19 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = ('name', )
     
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', )
-    search_fields = ('name', )
+    list_display = ('name', 'category', 'value', )
+    search_fields = ('name', 'category', )
     list_filter = ('name', 'category', )
     
 class StockingAdmin(admin.ModelAdmin):
-    list_display = ('supermarket', 'product', )
+    list_display = ('supermarket', 'product', 'amount', )
     search_fields = ('supermarket', 'product', )
     list_filter = ('supermarket', 'product', )
 
 class PurchaseAdmin(admin.ModelAdmin):
-    list_display = ('customer', 'supermarket', 'product', 'date', 'payment_method', )
+    list_display = ('customer', 'supermarket', 'product', 'date', 'amount', 'payment_method', )
     search_fields = ('customer', 'supermarket', 'product', 'date', 'payment_method', )
-    list_filter = ('customer', 'supermarket', 'product', 'date', 'payment_method', )
+    list_filter = ('supermarket', 'product', 'date', 'payment_method', )
     
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(Supermarket, SupermarketAdmin)

@@ -15,14 +15,15 @@ class Customer(models.Model):
         'F': 'Female',
     }
     SUBS_CHOICES = {
+        "D": "Dummy",
         "R": "Registered", 
         "P": "Pay", 
         "S": "Special",
     }
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    cpf = models.CharField(max_length=14)
     name = models.CharField(max_length=100)
+    cpf = models.CharField(max_length=14)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     subscription_type = models.CharField(max_length=1, null=True, blank=True, choices=SUBS_CHOICES)
 
@@ -130,4 +131,4 @@ class Purchase(models.Model):
         verbose_name_plural = "Compras"
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.supermarket} - {self.product}"

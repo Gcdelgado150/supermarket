@@ -1,41 +1,44 @@
 import streamlit as st
-from helpers.global_variables import BASE_URL, PRODUCTS_URL, CATEGORIES_URL
-import requests
-import json
 import pandas as pd
+from helpers.global_variables import PRODUCTS_URL, CATEGORIES_URL
+from helpers.help_request import custom_get, custom_post
 from helpers import create_sidebar
 
 st.set_page_config(
         page_title="Products",
+        layout="wide"
 )
 
 create_sidebar()
+st.title("Adicionar um produto à um supermercado existente")
+st.header(":blue[]", divider="violet")
 
 def verify_conditions():
+    """False is to enable button (valid conditions)
+      True is for disable button (invalid conditions)"""
     return False
 
-response_categories = requests.get(BASE_URL + CATEGORIES_URL)
-response_categories = json.loads(response_categories.text)
-df = pd.DataFrame(response_categories["results"])[["name"]]
+response_categories = custom_get(CATEGORIES_URL)
 
-name = st.text_input(label="Name of the product: ")
-value = st.number_input(
-    label="Enter a value:",
-    value=0.0,  # Default value
-    format=f"%.2f",  # Format to display the number
-    step=0.01  # Increment step, to match decimal places
-)
-category = st.selectbox("Category:", df.name.unique())
-st.write(str(category))
-# st.write()
+if response_categories:
+    df = pd.DataFrame(response_categories["results"])[["name"]]
 
-button_disabled = verify_conditions()
-if button_disabled:
-    st.info(f"The product {name} with value {value} is invalid.")
+    name = st.text_input(label="Name of the product: ")
+    value = st.number_input(
+        label="Enter a value:",
+        value=0.0,  # Default value
+        format=f"%.2f",  # Format to display the number
+        step=0.01  # Increment step, to match decimal places
+    )
+    category = st.selectbox("Category:", df.name.unique())
 
-if st.button(label="Add a product", disabled=button_disabled):
-    requests.post(BASE_URL + PRODUCTS_URL, json={"name":name, 
-                                                 "value": value, 
-                                                 "category": str(category)})
+    button_disabled = verify_conditions()
+    if button_disabled:
+        st.info(f"The product {name} with value {value} is invalid.")
+
+    if st.button(label="Add a product", disabled=button_disabled):
+        custom_post(PRODUCTS_URL, data={"name":name, 
+                                        "value": value,
+                                        "category": str(category)})
 
 

@@ -1,31 +1,43 @@
 import streamlit as st
-import requests
-from helpers import BASE_URL, CATEGORIES_URL
+from helpers import CATEGORIES_URL
+from helpers.help_request import custom_get, custom_post
 import pandas as pd
-import json
 from helpers import create_sidebar
 
+def is_valid(name, df, description):
+    if name and description:
+        if name.lower() in df.name.unique():
+            st.info(f"The category {name} trying to be add already exists")
+            return True
+        else:
+            return False
+    else:
+        return True
+    
 st.set_page_config(
         page_title="Categories",
+        layout="wide"
 )
 
 create_sidebar()
 
-name = st.text_input(label="Name of the category: ")
-description = st.text_area(
-    label="Description of the category:",
-    height=200,  # Adjust the height of the text area
-    placeholder="Description of the category..."  # Placeholder text
-)
+st.title("Adicionar uma categoria de produtos")
+st.header(":blue[]", divider="violet")
 
-response_categories = requests.get(BASE_URL + CATEGORIES_URL)
-response_categories = json.loads(response_categories.text)
-df = pd.DataFrame(response_categories["results"])
-df["name"] = df["name"].str.lower()
+response_categories = custom_get(CATEGORIES_URL)
 
-button_disabled = name.lower() in df.name.unique()
-if button_disabled:
-    st.info(f"The category {name} trying to be add already exists")
+if response_categories:
+    name = st.text_input(label="Name of the category: ")
+    description = st.text_area(
+        label="Description of the category:",
+        height=200,  # Adjust the height of the text area
+        placeholder="Description of the category..."  # Placeholder text
+    )
 
-if st.button(label="Add category", disabled=button_disabled):
-    requests.post(BASE_URL + CATEGORIES_URL, json={"name":name, "description": description})
+    df = pd.DataFrame(response_categories["results"])
+    df["name"] = df["name"].str.lower()
+
+    button_disabled = is_valid(name, df, description)
+
+    if st.button(label="Add category", disabled=button_disabled):
+        custom_post(CATEGORIES_URL, data={"name":name, "description": description})

@@ -26,4 +26,6 @@ Project for a supermarket using Django and Streamlit
 
 8. Create URLs - Views - Serializerss
 
-8. Paginação
+9. Paginação
+
+10. Create streamlit with the views

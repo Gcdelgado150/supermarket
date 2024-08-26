@@ -1,5 +1,5 @@
-# supermarket
-Project for a supermarket using Django and Streamlit 
+# Supermarket
+Project for a Supermarket using Django as backend and Streamlit as frontend
 
 # Data Structure for the project:
 
@@ -39,3 +39,6 @@ Project for a supermarket using Django and Streamlit
     - payment_method
     
 ![alt text](data/documentation/data_structure.png)
+
+# Registering Supermarkets
+![alt text](data/documentation/registering_market.png)

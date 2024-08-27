@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     # Custom apps
     'rest_framework',
     'market',
-    'accounts'
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -52,9 +52,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Custom Middlewares
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'core.urls'
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8501',  # URL where Streamlit runs locally
+    'https://yourstreamlitdomain.com',
+]
 
 TEMPLATES = [
     {
@@ -131,3 +139,23 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
 }
+
+# Set the maximum age of the session cookie (in seconds)
+SESSION_COOKIE_AGE = 1209600  # 2 weeks
+
+# Set whether to use secure cookies for sessions (only over HTTPS)
+SESSION_COOKIE_SECURE = True
+
+# Set the name of the session cookie (default is 'sessionid')
+SESSION_COOKIE_NAME = 'sessionid'
+
+# Set the session cookie to be HttpOnly (prevents access via JavaScript)
+SESSION_COOKIE_HTTPONLY = True
+
+# Set whether the session cookie expires when the browser is closed
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# The CSRF token cookie will have the same lifetime as the session cookie
+CSRF_COOKIE_AGE = 1209600  # 2 weeks
+CSRF_COOKIE_SECURE = True  # Only send over HTTPS
+CSRF_COOKIE_HTTPONLY = True  # Prevent access via JavaScript

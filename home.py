@@ -1,11 +1,15 @@
+from helpers import create_sidebar, main_login
+from helpers.cookie_handler import get_user_info_from_session
 import streamlit as st
-import requests
-import json
-import pandas as pd
-import plotly.express as px
-from helpers import create_sidebar
-from helpers.global_variables import BASE_URL, PRODUCTS_URL, CATEGORIES_URL, MARKET_URL, STOCK_URL
 
-create_sidebar()
+def home():
+    create_sidebar()
+    st.write(f"You're welcome {st.session_state['username']}.")
 
-st.write("This is the home page.")
+if __name__ == "__main__":
+    logged = get_user_info_from_session()
+
+    if not logged:
+        main_login()
+    else:
+        home()

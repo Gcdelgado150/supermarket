@@ -3,8 +3,14 @@ import re
 from django.db import transaction
 from market.models import *
 import logging
+from django.contrib.auth.models import User
 
 logger = logging.getLogger('yourapp')
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email')
 
 class StockSerializer(serializers.ModelSerializer):
     supermarket = serializers.CharField()

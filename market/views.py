@@ -51,3 +51,56 @@ class CategoriesController(viewsets.ModelViewSet):
     serializer_class = CategoriesSerializer
     filter_backends = [RQLFilterBackend]
     rql_filter_class = CategoryFilterClass
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth import authenticate, login, logout
+
+class LoginView(APIView):
+    def post(self, request):
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)  # This will set the session cookie
+            return JsonResponse({'message': 'Login successful'})
+        else:
+            return JsonResponse({'error': 'Invalid credentials'}, status=401)
+
+class LogoutView(APIView):
+    def post(self, request):
+        logout(request)
+        return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
+
+from django.http import JsonResponse
+from django.contrib.sessions.models import Session
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from datetime import datetime, timedelta
+from django.http import HttpResponse
+
+def set_custom_cookie(request):
+    response = HttpResponse("Setting a custom cookie")
+    
+    # Set a cookie with a 30-day expiration
+    expires = datetime.utcnow() + timedelta(days=30)
+    response.set_cookie('custom_cookie', 'value', expires=expires, httponly=True, secure=True)
+    
+    return response
+
+def get_user_info(request):
+    sessionid = request.COOKIES.get('sessionid')
+    if not sessionid:
+        return JsonResponse({'error': 'No session ID provided'}, status=400)
+
+    try:
+        session = Session.objects.get(pk=sessionid)
+        user_id = session.get_decoded().get('_auth_user_id')
+        user = get_user_model().objects.get(pk=user_id)
+        return JsonResponse({'username': user.username})
+    except Session.DoesNotExist:
+        return JsonResponse({'error': 'Invalid session ID'}, status=400)
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=400)

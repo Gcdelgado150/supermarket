@@ -19,25 +19,26 @@ st.set_page_config(
         layout="wide"
 )
 
-create_sidebar()
+logged = create_sidebar()
 
-st.title("Adicionar uma categoria de produtos")
-st.header(":blue[]", divider="violet")
+if logged:
+    st.title("Adicionar uma categoria de produtos")
+    st.header(":blue[]", divider="violet")
 
-response_categories = custom_get(CATEGORIES_URL)
+    response_categories = custom_get(CATEGORIES_URL)
 
-if response_categories:
-    name = st.text_input(label="Name of the category: ")
-    description = st.text_area(
-        label="Description of the category:",
-        height=200,  # Adjust the height of the text area
-        placeholder="Description of the category..."  # Placeholder text
-    )
+    if response_categories:
+        name = st.text_input(label="Name of the category: ")
+        description = st.text_area(
+            label="Description of the category:",
+            height=200,  # Adjust the height of the text area
+            placeholder="Description of the category..."  # Placeholder text
+        )
 
-    df = pd.DataFrame(response_categories["results"])
-    df["name"] = df["name"].str.lower()
+        df = pd.DataFrame(response_categories["results"])
+        df["name"] = df["name"].str.lower()
 
-    button_disabled = is_valid(name, df, description)
+        button_disabled = is_valid(name, df, description)
 
-    if st.button(label="Add category", disabled=button_disabled):
-        custom_post(CATEGORIES_URL, data={"name":name, "description": description})
+        if st.button(label="Add category", disabled=button_disabled):
+            custom_post(CATEGORIES_URL, data={"name":name, "description": description})

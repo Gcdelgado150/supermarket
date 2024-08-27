@@ -9,19 +9,20 @@ st.set_page_config(
         page_title="Stock",
 )
 
-create_sidebar()
+logged = create_sidebar()
 
-res_stock = custom_get(STOCK_URL)
-res_supermarket = custom_get(MARKET_URL)
+if logged:
+        res_stock = custom_get(STOCK_URL)
+        res_supermarket = custom_get(MARKET_URL)
 
-if res_stock and res_supermarket:
-    df = pd.DataFrame(res_stock["results"])[["supermarket", "product", "amount"]]
-    df_markets = pd.DataFrame(res_supermarket["results"])[["name"]]
-    
-    supermarket = st.radio("Selecione um supermercado", options=df_markets.name.unique())
+        if res_stock and res_supermarket:
+                df = pd.DataFrame(res_stock["results"])[["supermarket", "product", "amount"]]
+                df_markets = pd.DataFrame(res_supermarket["results"])[["name"]]
+                
+                supermarket = st.radio("Selecione um supermercado", options=df_markets.name.unique())
 
-    # analise do estoque desse supermercado
+                # analise do estoque desse supermercado
 
-    fig1 = px.bar(df[df["supermarket"] == supermarket], x='product', y='amount')
-    st.plotly_chart(fig1, use_container_width=True)
+                fig1 = px.bar(df[df["supermarket"] == supermarket], x='product', y='amount')
+                st.plotly_chart(fig1, use_container_width=True)
     

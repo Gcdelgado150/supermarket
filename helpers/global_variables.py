@@ -9,3 +9,7 @@ CUSTOMER_URL   = "market/customerController/"
 PRODUCTS_URL   = "market/productsController/"
 PURCHASES_URL  = "market/purchases/"
 CATEGORIES_URL = "market/categoriesController/"
+USER_INFO_URL = "get_user_info/"
+
+LOGOUT_URL = "logout/"
+LOGIN_URL = "login/"

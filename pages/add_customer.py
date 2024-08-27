@@ -17,34 +17,36 @@ st.set_page_config(
         layout="wide"
 )
 
-create_sidebar()
-st.title("Cadastrar um cliente à rede")
-st.header(":blue[]", divider="violet")
+logged = create_sidebar()
 
-name = st.text_input(label="Nome do cliente: ")
-cpf_input = st.text_input("CPF (somente números)", max_chars=11)
+if logged:
+    st.title("Cadastrar um cliente à rede")
+    st.header(":blue[]", divider="violet")
 
-gender_options = ['M', 'F']
-gender_choices = ['Male', 'Female']
+    name = st.text_input(label="Nome do cliente: ")
+    cpf_input = st.text_input("CPF (somente números)", max_chars=11)
 
-gender = st.radio("Gender:", options=gender_choices, horizontal=True)
-gender = gender_options[gender_choices.index(gender)]
+    gender_options = ['M', 'F']
+    gender_choices = ['Male', 'Female']
 
-subs_options = ['R', 'P', 'S']
-subs_choices = ['Registered', 'Pay', 'Special']
+    gender = st.radio("Gender:", options=gender_choices, horizontal=True)
+    gender = gender_options[gender_choices.index(gender)]
 
-subscription_type = st.radio("Subscription:", options=subs_choices)
-subscription_type = subs_options[subs_choices.index(subscription_type)]
+    subs_options = ['R', 'P', 'S']
+    subs_choices = ['Registered', 'Pay', 'Special']
+
+    subscription_type = st.radio("Subscription:", options=subs_choices)
+    subscription_type = subs_options[subs_choices.index(subscription_type)]
 
 
-button_disabled = is_valid_cpf(cpf_input)
-if cpf_input and not button_disabled:
-    st.info(f"CPF: {cpf_input} is invalid.")
+    button_disabled = is_valid_cpf(cpf_input)
+    if cpf_input and not button_disabled:
+        st.info(f"CPF: {cpf_input} is invalid.")
 
-if st.button(label="Add a customer", disabled=not button_disabled):
-    custom_post(CUSTOMER_URL, data={"name":name, 
-                                    "cpf": cpf_input,
-                                    "gender": gender,
-                                    "subscription_type": subscription_type})
+    if st.button(label="Add a customer", disabled=not button_disabled):
+        custom_post(CUSTOMER_URL, data={"name":name, 
+                                        "cpf": cpf_input,
+                                        "gender": gender,
+                                        "subscription_type": subscription_type})
 
 

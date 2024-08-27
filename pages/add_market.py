@@ -15,14 +15,15 @@ st.set_page_config(
         layout="wide"
 )
 
-create_sidebar()
+logged = create_sidebar()
     
-st.title("Cadastrar um supermercado")
-st.header(":blue[]", divider="violet")
+if logged:
+    st.title("Cadastrar um supermercado")
+    st.header(":blue[]", divider="violet")
 
-name = st.text_input(label="Nome do supermercado: ")
-city = st.text_input(label="Cidade do supermercado: ")
+    name = st.text_input(label="Nome do supermercado: ")
+    city = st.text_input(label="Cidade do supermercado: ")
 
-button_disabled = is_valid(name, city)
-if st.button(label="Cadastrar supermercado", disabled=button_disabled):
-    custom_post(MARKET_URL, data={"name":name, "city": city})
+    button_disabled = is_valid(name, city)
+    if st.button(label="Cadastrar supermercado", disabled=button_disabled):
+        custom_post(MARKET_URL, data={"name":name, "city": city})

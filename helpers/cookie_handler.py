@@ -33,16 +33,16 @@ class CookieManager:
         self.cookies.update({key: morsel for key, morsel in cookies.items()})
 
     def get_cookie(self, name):
-        print("Getting cookie: ", name)
+        # print("Getting cookie: ", name)
         return self.cookies.get(name, None)
     
     def get_cookies(self):
-        print("Getting cookies..")
+        # print("Getting cookies..")
         print(self.cookies)
         return self.cookies
 
     def clear_cookies(self):
-        print("Clearing cookies..")
+        # print("Clearing cookies..")
         self.cookies = {}
 
 cookie_manager = CookieManager()

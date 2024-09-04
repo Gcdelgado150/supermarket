@@ -6,24 +6,6 @@ import streamlit as st
 # Streamlit app UI
 def main_login():
     # Define custom CSS for styling the login container
-    st.markdown("""
-        <style>
-        .login-input {
-            margin-bottom: 15px;
-        }
-        .login-button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .login-button:hover {
-            background-color: #0056b3;
-        }
-        </style>
-    """, unsafe_allow_html=True)
 
     st.title('Login to Supermarket')
 

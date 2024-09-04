@@ -40,5 +40,3 @@ Project for a Supermarket using Django as backend and Streamlit as frontend
     
 ![alt text](data/documentation/data_structure.png)
 
-# Registering Supermarkets
-![alt text](data/documentation/registering_market.png)
